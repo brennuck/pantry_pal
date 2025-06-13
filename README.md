@@ -44,3 +44,16 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## OpenAI Integration
+
+The dashboard supports adding items from photos using the OpenAI Vision API.
+Provide an API key in an environment variable named `REACT_APP_OPENAI_API_KEY`.
+When running locally create a `.env` file with:
+
+```
+REACT_APP_OPENAI_API_KEY=your_api_key_here
+```
+
+Selecting **Add Item from Photo** will prompt for an image and the detected
+product name will be added to the selected pantry.

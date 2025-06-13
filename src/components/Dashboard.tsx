@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './Dashboard.css';
+import { extractItemName } from '../openAI';
 
 interface Pantry {
   name: string;
@@ -13,6 +14,8 @@ function Dashboard() {
   const [newItem, setNewItem] = useState('');
   const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
   const [editingText, setEditingText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const addPantry = () => {
     const trimmed = newPantry.trim();
@@ -55,6 +58,24 @@ function Dashboard() {
     setEditingText('');
   };
 
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (selectedPantry === null) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLoading(true);
+    try {
+      const name = await extractItemName(file);
+      if (name) {
+        const updated = [...pantries];
+        updated[selectedPantry].items.push(name);
+        setPantries(updated);
+      }
+    } finally {
+      setLoading(false);
+      e.target.value = '';
+    }
+  };
+
   return (
     <div className="dashboard">
       <header className="dashboard-header">Header</header>
@@ -90,15 +111,27 @@ function Dashboard() {
           </h1>
           {selectedPantry !== null ? (
             <div className="item-section">
-              <div className="add-item">
-                <input
-                  type="text"
-                  value={newItem}
-                  onChange={(e) => setNewItem(e.target.value)}
-                  placeholder="New item"
-                />
-                <button onClick={addItem}>Add Item</button>
-              </div>
+            <div className="add-item">
+              <input
+                type="text"
+                value={newItem}
+                onChange={(e) => setNewItem(e.target.value)}
+                placeholder="New item"
+              />
+              <button onClick={addItem}>Add Item</button>
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                ref={fileInputRef}
+                onChange={handlePhotoUpload}
+                style={{ display: 'none' }}
+              />
+              <button onClick={() => fileInputRef.current?.click()}>
+                Add Item from Photo
+              </button>
+              {loading && <span> Processing...</span>}
+            </div>
               <ul className="item-list">
                 {pantries[selectedPantry].items.map((item, i) => (
                   <li key={i}>
