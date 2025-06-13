@@ -18,10 +18,14 @@ test('can add, edit and delete an item', () => {
 
   fireEvent.click(screen.getByRole('button', { name: 'Test Pantry' }));
 
+  expect(
+    screen.getByRole('button', { name: /add item from photo/i })
+  ).toBeInTheDocument();
+
   fireEvent.change(screen.getByPlaceholderText(/new item/i), {
     target: { value: 'Apple' },
   });
-  fireEvent.click(screen.getByRole('button', { name: /add item/i }));
+  fireEvent.click(screen.getByRole('button', { name: /^add item$/i }));
 
   expect(screen.getByText('Apple')).toBeInTheDocument();
 
