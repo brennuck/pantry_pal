@@ -2,23 +2,30 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  padding: 1rem;
+  gap: 1rem;
 }
 
 .dashboard-header,
 .dashboard-footer {
-  background-color: #f8f8f8;
+  background: var(--background);
   padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
 }
 
 .dashboard-content {
   display: flex;
   flex: 1;
+  gap: 1rem;
 }
 
 .dashboard-sidebar {
   width: 200px;
-  background-color: #f0f0f0;
+  background: var(--background);
   padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
 }
 
 .add-pantry {
@@ -50,19 +57,23 @@
 .pantry-list button {
   width: 100%;
   text-align: left;
-  background: none;
+  background: var(--background);
   border: none;
-  padding: 0.25rem;
+  padding: 0.5rem;
   cursor: pointer;
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
 }
 
 .pantry-list button.active {
-  background-color: #ddd;
+  box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
 }
 
 .dashboard-main {
   flex: 1;
   padding: 1rem;
+  background: var(--background);
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
 }
 
 .add-item {
@@ -77,7 +88,7 @@
 }
 
 .add-item button {
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
 .item-list {
@@ -87,6 +98,8 @@
 
 .item-list li {
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .item-list button {
@@ -97,6 +110,8 @@
   padding: 0.5rem;
   margin: 0.5rem;
   text-align: center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
 }
 
 .notification.success {
@@ -107,4 +122,13 @@
 .notification.error {
   background-color: #f8d7da;
   color: #721c24;
+}
+
+@media (max-width: 600px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    width: 100%;
+  }
 }
