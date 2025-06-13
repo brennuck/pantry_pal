@@ -64,3 +64,31 @@
   flex: 1;
   padding: 1rem;
 }
+
+.add-item {
+  margin-bottom: 1rem;
+}
+
+.add-item input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem;
+  box-sizing: border-box;
+}
+
+.add-item button {
+  padding: 0.25rem 0.5rem;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+}
+
+.item-list li {
+  margin-bottom: 0.5rem;
+}
+
+.item-list button {
+  margin-left: 0.25rem;
+}
