@@ -16,13 +16,16 @@ export async function extractItemName(file: File): Promise<string | null> {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4-vision-preview',
+      model: 'gpt-4o',
       messages: [
         {
           role: 'user',
           content: [
-            { type: 'text', text: 'Identify the product name in this image and return only the name.' },
-            { type: 'image_url', image_url: image },
+            {
+              type: 'text',
+              text: 'Identify the product name in this image and return only the name.'
+            },
+            { type: 'image_url', image_url: { url: image } },
           ],
         },
       ],
