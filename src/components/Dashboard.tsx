@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './Dashboard.css';
 import { extractItemName } from '../openAI';
+import { toast } from 'react-toastify';
 
 interface Pantry {
   name: string;
@@ -19,26 +20,41 @@ function Dashboard() {
 
   const addPantry = () => {
     const trimmed = newPantry.trim();
-    if (trimmed.length === 0) return;
+    if (trimmed.length === 0) {
+      toast.error('Pantry name cannot be empty');
+      return;
+    }
     setPantries([...pantries, { name: trimmed, items: [] }]);
     setNewPantry('');
+    toast.success('Pantry added');
   };
 
   const addItem = () => {
-    if (selectedPantry === null) return;
+    if (selectedPantry === null) {
+      toast.error('Select a pantry first');
+      return;
+    }
     const trimmed = newItem.trim();
-    if (trimmed.length === 0) return;
+    if (trimmed.length === 0) {
+      toast.error('Item name cannot be empty');
+      return;
+    }
     const updated = [...pantries];
     updated[selectedPantry].items.push(trimmed);
     setPantries(updated);
     setNewItem('');
+    toast.success('Item added');
   };
 
   const deleteItem = (index: number) => {
-    if (selectedPantry === null) return;
+    if (selectedPantry === null) {
+      toast.error('Select a pantry first');
+      return;
+    }
     const updated = [...pantries];
     updated[selectedPantry].items.splice(index, 1);
     setPantries(updated);
+    toast.success('Item deleted');
   };
 
   const startEditItem = (index: number) => {
@@ -48,20 +64,33 @@ function Dashboard() {
   };
 
   const saveItem = (index: number) => {
-    if (selectedPantry === null) return;
+    if (selectedPantry === null) {
+      toast.error('Select a pantry first');
+      return;
+    }
     const trimmed = editingText.trim();
-    if (trimmed.length === 0) return;
+    if (trimmed.length === 0) {
+      toast.error('Item name cannot be empty');
+      return;
+    }
     const updated = [...pantries];
     updated[selectedPantry].items[index] = trimmed;
     setPantries(updated);
     setEditingItemIndex(null);
     setEditingText('');
+    toast.success('Item updated');
   };
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (selectedPantry === null) return;
+    if (selectedPantry === null) {
+      toast.error('Select a pantry first');
+      return;
+    }
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      toast.error('No file selected');
+      return;
+    }
     setLoading(true);
     try {
       const name = await extractItemName(file);
@@ -69,7 +98,12 @@ function Dashboard() {
         const updated = [...pantries];
         updated[selectedPantry].items.push(name);
         setPantries(updated);
+        toast.success('Item added from photo');
+      } else {
+        toast.error('Could not detect item');
       }
+    } catch {
+      toast.error('Failed to process image');
     } finally {
       setLoading(false);
       e.target.value = '';
