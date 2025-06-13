@@ -25,17 +25,22 @@ test('can add, edit and delete an item', () => {
   fireEvent.change(screen.getByPlaceholderText(/new item/i), {
     target: { value: 'Apple' },
   });
+  fireEvent.change(screen.getByPlaceholderText(/qty/i), {
+    target: { value: '2' },
+  });
   fireEvent.click(screen.getByRole('button', { name: /^add item$/i }));
 
-  expect(screen.getByText('Apple')).toBeInTheDocument();
+  expect(screen.getByText(/Apple - Qty: 2/)).toBeInTheDocument();
 
   fireEvent.click(screen.getByRole('button', { name: /edit/i }));
   const editInput = screen.getByDisplayValue('Apple');
   fireEvent.change(editInput, { target: { value: 'Banana' } });
+  const qtyInput = screen.getByDisplayValue('2');
+  fireEvent.change(qtyInput, { target: { value: '3' } });
   fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-  expect(screen.getByText('Banana')).toBeInTheDocument();
+  expect(screen.getByText(/Banana - Qty: 3/)).toBeInTheDocument();
 
   fireEvent.click(screen.getByRole('button', { name: /delete/i }));
-  expect(screen.queryByText('Banana')).not.toBeInTheDocument();
+  expect(screen.queryByText(/Banana - Qty: 3/)).not.toBeInTheDocument();
 });
