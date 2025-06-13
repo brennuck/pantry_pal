@@ -21,6 +21,45 @@
   padding: 1rem;
 }
 
+.add-pantry {
+  margin-bottom: 1rem;
+}
+
+.add-pantry input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem;
+  box-sizing: border-box;
+}
+
+.add-pantry button {
+  width: 100%;
+  padding: 0.25rem;
+}
+
+.pantry-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pantry-list li {
+  margin-bottom: 0.5rem;
+}
+
+.pantry-list button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.pantry-list button.active {
+  background-color: #ddd;
+}
+
 .dashboard-main {
   flex: 1;
   padding: 1rem;
